@@ -20,17 +20,14 @@ import java.util.Map;
  */
 
 public class MyMessageReceiver extends MessageReceiver {
-
-    // 消息接收部分的LOG_TAG
-    public static final String REC_TAG = "receiver";
     @Override
     public void onNotification(Context context, String title, String summary, Map<String, String> extraMap) {
         JSONObject response = new JSONObject();
         try {
-            response.put("type","notify");
-            response.put("summary",summary);
+            response.put("eventType","receiveNotification");
+            response.put("content",summary);
             response.put("title",title);
-            response.put("extraMap",extraMap);
+            response.put("extras",extraMap);
 
             sendEvent(response);
         } catch (JSONException e) {
@@ -41,7 +38,7 @@ public class MyMessageReceiver extends MessageReceiver {
     public void onMessage(Context context, CPushMessage cPushMessage) {
         JSONObject response = new JSONObject();
         try {
-            response.put("type","message");
+            response.put("eventType","receiveMessage");
             response.put("messageid",cPushMessage.getMessageId());
             response.put("title",cPushMessage.getTitle());
             response.put("content",cPushMessage.getContent());
@@ -53,20 +50,12 @@ public class MyMessageReceiver extends MessageReceiver {
     }
     @Override
     public void onNotificationOpened(Context context, String title, String summary, String extraMap) {
-        Log.i(REC_TAG,"mynotity"+extraMap);
-
         JSONObject response = new JSONObject();
         try {
-            response.put("type","notifyopen");
+            response.put("eventType","openNotification");
             response.put("title",title);
-            response.put("summary",summary);
-            response.put("extraMap",extraMap);
-
-            SharedPreferences preferences=context.getSharedPreferences("mynotifyMsg",Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor=preferences.edit();
-            editor.putString("msg", response.toString());
-            editor.commit();
-
+            response.put("content",summary);
+            response.put("extras",extraMap);
             sendEvent(response);
         } catch (JSONException e) {
             sendError(e.getMessage());
@@ -82,14 +71,7 @@ public class MyMessageReceiver extends MessageReceiver {
     }
     @Override
     protected void onNotificationRemoved(Context context, String messageId) {
-        JSONObject response = new JSONObject();
-        try {
-            response.put("type","notifyremove");
-            response.put("messageId",messageId);
-            sendEvent(response);
-        } catch (JSONException e) {
-            sendError(e.getMessage());
-        }
+        Log.e("AliPushMessageReceiver", "onNotificationRemoved, messageId: " + messageId);
     }
 
     private void sendEvent(JSONObject _json) {
