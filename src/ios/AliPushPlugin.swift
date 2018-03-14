@@ -81,7 +81,7 @@ import CloudPushSDK
         CloudPushSDK.listAliases({res in
             if(res!.success){
                 print(res!.data as! String);//逗号分隔的字符串拼接   aa,bb,cc
-                let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: (res!.data as! String).split(separator: ","));
+                let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: (res!.data as! String));
                 self.commandDelegate.send(result, callbackId: cmd.callbackId);
             }else{
                 print("list alias failed", res!.error!.localizedDescription);
@@ -128,7 +128,7 @@ import CloudPushSDK
             let result:CDVPluginResult;
             if(res!.success){
                 print("tags", res!.data);
-                result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: (res!.data as! String).split(separator: ","));
+                result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: (res!.data as! String));
             }else{
                 print("remove alias failed",cmd.argument(at: 0), res!.error!.localizedDescription);
                 result = CDVPluginResult(status: CDVCommandStatus_ERROR);
