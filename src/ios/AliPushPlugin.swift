@@ -250,7 +250,7 @@ import CloudPushSDK
             // 处理iOS 10通知，并上报通知打开回执
             handleiOS10Notification(response.notification)
             let content: UNNotificationContent = response.notification.request.content
-            AliPushPlugin.fireNotificationEvent(object: ["eventType":"openNotification","content":content.body,"badge":content.badge, "extras":content.userInfo]);
+            AliPushPlugin.fireNotificationEvent(object: ["eventType":"openNotification","content":content.body,"title":content.title, "extras":content.userInfo]);
         }
         
         if userAction == UNNotificationDismissActionIdentifier {
@@ -276,7 +276,7 @@ import CloudPushSDK
         print("Receive a notification in foreground.")
         handleiOS10Notification(notification)
         let content: UNNotificationContent = notification.request.content
-        AliPushPlugin.fireNotificationEvent(object: ["eventType":"receiveNotification","content":content.body,"badge":content.badge, "extras":content.userInfo]);
+        AliPushPlugin.fireNotificationEvent(object: ["eventType":"receiveNotification","content":content.body,"title":content.title, "extras":content.userInfo]);
         // 通知不弹出
 //        completionHandler([])
         // 通知弹出，且带有声音、内容和角标
