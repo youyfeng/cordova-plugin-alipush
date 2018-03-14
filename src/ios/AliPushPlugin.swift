@@ -227,10 +227,8 @@ import CloudPushSDK
     func initCloudPushSDK() {
         // 打开Log，线上建议关闭
         CloudPushSDK.turnOnDebug()
-        let dict = NSDictionary(contentsOfFile: Bundle.main.path(forResource: "AliPushConfig", ofType: "plist")!)
-        
-        let appkey = dict!["AppKey"] as! String;
-        let appSecret = dict!["AppSecret"] as! String;
+        let appkey = commandDelegate.settings["alipush_app_key"] as! String;
+        let appSecret = commandDelegate.settings["alipush_app_secret"] as! String;
         CloudPushSDK.asyncInit(appkey, appSecret: appSecret, callback: {res in
             if(res!.success){
 //                let result = CDVPluginResult(status: CDVCommandStatus_OK);

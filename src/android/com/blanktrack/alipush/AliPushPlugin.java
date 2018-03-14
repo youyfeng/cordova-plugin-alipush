@@ -23,22 +23,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-
-/**
- * Created by Blank on 2017-08-24.
- */
-
 public class AliPushPlugin extends CordovaPlugin {
-    public static final String TAG = "PushPlugin";
-    private JSONObject params;
     private static CallbackContext pushContext;
 
     public static CallbackContext getCurrentCallbackContext() {
         return pushContext;
     }
 
-    public static void initCloudChannel(Context applicationContext) {
-
+public static void initCloudChannel(Context applicationContext) {
         PushServiceFactory.init(applicationContext);
         final CloudPushService pushService = PushServiceFactory.getCloudPushService();
         pushService.register(applicationContext, new CommonCallback() {
@@ -52,27 +44,7 @@ public class AliPushPlugin extends CordovaPlugin {
                 Log.e(TAG, "init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);
             }
         });
-
-        ApplicationInfo applicationInfo = null;
-        try {
-            applicationInfo = applicationContext.getPackageManager().getApplicationInfo(applicationContext.getPackageName(), PackageManager.GET_META_DATA);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        String xiaomi = applicationInfo.metaData.getString("com.blanktrack.miid");
-        String xiaomikey = applicationInfo.metaData.getString("com.blanktrack.mikey");
-        String gcmSendId = applicationInfo.metaData.getString("com.blanktrack.gcmsendid");
-        String gcmAppId = applicationInfo.metaData.getString("com.blanktrack.gcmappid");
-        MiPushRegister.register(applicationContext, xiaomi, xiaomikey);
-        HuaWeiRegister.register(applicationContext);
-        GcmRegister.register(applicationContext, gcmSendId, gcmAppId);
     }
-
-    private Context getApplicationContext() {
-        return this.cordova.getActivity().getApplicationContext();
-    }
-
     @Override
     public boolean execute(final String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
         CloudPushService service = PushServiceFactory.getCloudPushService();
@@ -90,6 +62,13 @@ public class AliPushPlugin extends CordovaPlugin {
         switch (action) {
             case "_init":
             case "init": {
+                String MIID = preferences.getString("MIID", "");
+                String MIKEY = preferences.getString("MIKEY", "");
+                String GCMSENDID = preferences.getString("GCMSENDID", "");
+                String GCMAPPID = preferences.getString("GCMAPPID", "");
+                MiPushRegister.register(applicationContext, MIID, MIKEY);
+                HuaWeiRegister.register(applicationContext);
+                GcmRegister.register(applicationContext,GCMSENDID,GCMAPPID);
                 pushContext = callbackContext;
                 PluginResult result = new PluginResult(PluginResult.Status.OK);
                 result.setKeepCallback(true);

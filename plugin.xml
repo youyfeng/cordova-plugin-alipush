@@ -3,13 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-alipush" version="1.0.0" 
     xmlns="http://apache.org/cordova/ns/plugins/1.0">
     <name>PushPlugin</name>
-    <js-module name="PushPlugin" src="www/PushPlugin.js">
-        <clobbers target="PushPlugin" />
+    <engines>
+        <engine name="cordova-ios" version=">=3.8"></engine>
+        <engine name="cordova-android" version=">=7"></engine>
+    </engines>
+    <js-module name="AliPushPlugin" src="www/AliPushPlugin.js">
+        <clobbers target="AliPushPlugin" />
     </js-module>
-    <preference name="MIID" default="" />
-    <preference name="MIKEY" default="" />
-    <preference name="GCMSENDID" default=""/>
-    <preference name="GCMAPPID" default=""/>
+    <preference name="MIID" default=" " />
+    <preference name="MIKEY" default=" " />
+    <preference name="GCMSENDID" default=" "/>
+    <preference name="GCMAPPID" default=" "/>
     <preference name="APP_KEY" />
     <preference name="APP_SECRET" />
     <dependency id="cordova-plugin-add-swift-support"/>
@@ -17,12 +21,13 @@
         <config-file parent="/*" target="config.xml">
             <feature name="AliPushPlugin">
                 <param name="ios-package" value="AliPushPlugin" />
-            </feature> 
+            </feature>
+            <preference name="AliPush_APP_KEY" value="$APP_KEY"/>
+            <preference name="AliPush_APP_SECRET" value="$APP_SECRET"/>
         </config-file>
         <header-file src="src/ios/AliPush-Bridging-Header.h"/>
         <source-file src="src/ios/AliPushPlugin.swift"/>
         <source-file src="src/ios/AppDelegate+AliPush.swift"/>
-        <resource-file src="src/ios/AliPushConfig.plist" />
         <!-- 依赖 -->
         <framework src="src/ios/libs/AlicloudUtils.framework" custom="true" />
         <framework src="src/ios/libs/CloudPushSDK.framework" custom="true" />
@@ -34,28 +39,24 @@
         <framework src="SystemConfiguration.framework" />
         <framework src="UserNotifications.framework" />
         <framework src="libsqlite3.tbd" />
-        <config-file target="*AliPushConfig.plist" parent="Appkey">
-            <string>$APP_KEY</string>
-        </config-file>
-        <config-file target="*AliPushConfig.plist" parent="Appsecret">
-            <string>$APP_SECRET</string>
-        </config-file>
     </platform>
     <platform name="android">
         <config-file parent="/*" target="res/xml/config.xml">
             <feature name="AliPushPlugin">
                 <param name="android-package" value="com.blanktrack.alipush.AliPushPlugin" />
             </feature>
+            <preference name="MIID" value="$MIID"/>
+            <preference name="MIKEY" value="$MIKEY"/>
+            <preference name="GCMSENDID" default="$GCMSENDID"/>
+            <preference name="GCMAPPID" default="$GCMAPPID"/>
         </config-file>
-        <edit-config file="AndroidManifest.xml" target="/manifest/application" mode="merge">
-            <application android:name="com.blanktrack.alipush.MyApplication"/>
-        </edit-config>
+
+        <hook type="after_plugin_add" src="scripts/androidAfterPrepare.js"/>
+
+        <hook type="after_prepare" src="scripts/androidAfterPrepare.js"/>
+        <hook type="before_plugin_uninstall" src="scripts/androidBeforePluginUninstall.js"/>
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <meta-data android:name="com.blanktrack.miid" android:value="\$MIID" />
-            <meta-data android:name="com.blanktrack.mikey" android:value="\$MIKEY" />
-            <meta-data android:name="com.blanktrack.gcmsendid" android:value="\$GCMSENDID" />
-            <meta-data android:name="com.blanktrack.gcmappid" android:value="$GCMAPPID" />
             <meta-data android:name="com.alibaba.app.appkey" android:value="$APP_KEY" />
             <meta-data android:name="com.alibaba.app.appsecret" android:value="$APP_SECRET" />
             <receiver android:name="com.blanktrack.alipush.MyMessageReceiver" android:exported="false">
@@ -90,11 +91,7 @@
             </service>
         </config-file>
         <framework src="push.gradle" custom="true" type="gradleReference" />
-        <!--<framework src="com.aliyun.ams:alicloud-android-push:3.0.11@aar" />-->
-        <!--<framework src="com.aliyun.ams:alicloud-android-utdid:1.1.5.3" />-->
-        <!--<framework src="com.aliyun.ams:alicloud-android-ut:5.1.0" />-->
-        <!--<framework src="com.aliyun.ams:alicloud-android-third-push:3.0.3@aar" />-->
-        <source-file src="src/android/com/blanktrack/alipush/PushPlugin.java" target-dir="src/com/blanktrack/alipush/" />
+        <source-file src="src/android/com/blanktrack/alipush/AliPushPlugin.java" target-dir="src/com/blanktrack/alipush/" />
         <source-file src="src/android/com/blanktrack/alipush/MyMessageReceiver.java" target-dir="src/com/blanktrack/alipush/" />
         <source-file src="src/android/com/blanktrack/alipush/MyApplication.java" target-dir="src/com/blanktrack/alipush/" />
     </platform>

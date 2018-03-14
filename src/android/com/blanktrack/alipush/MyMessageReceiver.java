@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.alibaba.sdk.android.push.MessageReceiver;
 import com.alibaba.sdk.android.push.notification.CPushMessage;
-import com.blanktrack.alipush.PushPlugin;
+import com.blanktrack.alipush.AliPushPlugin;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
@@ -78,7 +78,7 @@ public class MyMessageReceiver extends MessageReceiver {
         PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, _json);
         pluginResult.setKeepCallback(true);
 
-        CallbackContext pushCallback = PushPlugin.getCurrentCallbackContext();
+        CallbackContext pushCallback = AliPushPlugin.getCurrentCallbackContext();
         if (pushCallback != null) {
             pushCallback.sendPluginResult(pluginResult);
         }
@@ -87,7 +87,7 @@ public class MyMessageReceiver extends MessageReceiver {
     public void sendError(String message) {
         PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR, message);
         pluginResult.setKeepCallback(true);
-        CallbackContext pushCallback = PushPlugin.getCurrentCallbackContext();
+        CallbackContext pushCallback = AliPushPlugin.getCurrentCallbackContext();
         if (pushCallback != null) {
             pushCallback.sendPluginResult(pluginResult);
         }
