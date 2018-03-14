@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AliPushPlugin extends CordovaPlugin {
+    public static final String TAG = "AliPushPlugin";
     private static CallbackContext pushContext;
 
     public static CallbackContext getCurrentCallbackContext() {
@@ -62,6 +63,7 @@ public static void initCloudChannel(Context applicationContext) {
         switch (action) {
             case "_init":
             case "init": {
+                Context applicationContext = cordova.getActivity().getApplicationContext();
                 String MIID = preferences.getString("MIID", "");
                 String MIKEY = preferences.getString("MIKEY", "");
                 String GCMSENDID = preferences.getString("GCMSENDID", "");
