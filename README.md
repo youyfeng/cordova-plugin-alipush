@@ -4,6 +4,14 @@
 
 cordova plugin add https://github.com/llwwbb/cordova-plugin-AliPush.git --variable APP_KEY=appkey --variable APP_SECRET=appsecret --variable MIID=miid --variable MIKEY=mikey --variable GCMSENDID=gcmsendid --variable GCMAPPID=gcmapplicationid
 
+**辅助弹窗**
+
+    辅助弹窗可以确保应用后台被清理，仍能收到推送通知
+
+    参考阿里云推送文档https://help.aliyun.com/document_detail/30067.html
+    
+    服务器端需设置AndroidPopupActivity参数为{package-name}.alipush.AliPushActivity
+
 **初始化。**
 
     Android在应用启动时初始化并注册阿里云推送，init命令时注册第三方辅助通道
