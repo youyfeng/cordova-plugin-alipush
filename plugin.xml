@@ -52,9 +52,11 @@
         </config-file>
 
         <hook type="after_plugin_add" src="scripts/androidAfterPrepare.js"/>
+        <hook type="after_plugin_install" src="scripts/android_install.js"/>
 
         <hook type="after_prepare" src="scripts/androidAfterPrepare.js"/>
         <hook type="before_plugin_uninstall" src="scripts/androidBeforePluginUninstall.js"/>
+        <hook type="before_plugin_rm" src="scripts/android_install.js"/>
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <meta-data android:name="com.alibaba.app.appkey" android:value="$APP_KEY" />
@@ -71,6 +73,8 @@
                     <action android:name="com.alibaba.sdk.android.push.RECEIVE" />
                 </intent-filter>
             </receiver>
+            <activity android:exported="true" android:name=".alipush.AliPushActivity">
+            </activity>
             <receiver android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver" android:exported="true" android:permission="com.google.android.c2dm.permission.SEND">
                 <intent-filter>
                     <action android:name="com.google.android.c2dm.intent.RECEIVE" />

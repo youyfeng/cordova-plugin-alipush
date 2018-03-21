@@ -31,7 +31,7 @@ public class AliPushPlugin extends CordovaPlugin {
         return pushContext;
     }
 
-public static void initCloudChannel(Context applicationContext) {
+    public static void initCloudChannel(Context applicationContext) {
         PushServiceFactory.init(applicationContext);
         final CloudPushService pushService = PushServiceFactory.getCloudPushService();
         pushService.register(applicationContext, new CommonCallback() {
@@ -46,6 +46,7 @@ public static void initCloudChannel(Context applicationContext) {
             }
         });
     }
+
     @Override
     public boolean execute(final String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
         CloudPushService service = PushServiceFactory.getCloudPushService();
@@ -70,9 +71,21 @@ public static void initCloudChannel(Context applicationContext) {
                 String GCMAPPID = preferences.getString("GCMAPPID", "");
                 MiPushRegister.register(applicationContext, MIID, MIKEY);
                 HuaWeiRegister.register(applicationContext);
-                GcmRegister.register(applicationContext,GCMSENDID,GCMAPPID);
+                GcmRegister.register(applicationContext, GCMSENDID, GCMAPPID);
+                SharedPreferences sharedPreferences = applicationContext.getSharedPreferences("aliNotiMsg", Context.MODE_PRIVATE);
+                String json = sharedPreferences.getString("msg", "");
+                PluginResult result;
+                if (!"".equals(json)) {
+                    JSONObject object = new JSONObject(json);
+                    object.put("eventType", "openNotification");
+                    result = new PluginResult(PluginResult.Status.OK, object);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.clear();
+                    editor.commit();
+                } else {
+                    result = new PluginResult(PluginResult.Status.OK);
+                }
                 pushContext = callbackContext;
-                PluginResult result = new PluginResult(PluginResult.Status.OK);
                 result.setKeepCallback(true);
                 callbackContext.sendPluginResult(result);
                 break;
@@ -115,19 +128,19 @@ public static void initCloudChannel(Context applicationContext) {
                 }
                 break;
             }
-            case "listTags":{
+            case "listTags": {
                 service.listTags(CloudPushService.DEVICE_TARGET, callback);
                 break;
             }
-            case "addAlias":{
+            case "addAlias": {
                 service.addAlias(args.getString(0), callback);
                 break;
             }
-            case "removeAlias":{
+            case "removeAlias": {
                 service.removeAlias(args.getString(0), callback);
                 break;
             }
-            case "listAliases":{
+            case "listAliases": {
                 service.listAliases(callback);
                 break;
             }
