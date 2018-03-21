@@ -52,4 +52,7 @@ addAlias: function (success, error, alias)
 删除设备别名；
 支持删除指定别名和删除全部别名（alias为null or length = 0）
 removeAlias: function (success, error, alias) 
+查询别名
+查询设备别名；
+success回调参数为数组
 listAliases: function (success, error) 
