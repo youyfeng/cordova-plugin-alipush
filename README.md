@@ -2,7 +2,7 @@
 
 `APP_KEY和APP_SECRET必须存在`
 
-cordova plugin add https://github.com/llwwbb/cordova-plugin-AliPush --variable APP_KEY=appkey --variable APP_SECRET=appsecret --variable MIID=miid --variable MIKEY=mikey --variable GCMSENDID=gcmsendid --variable GCMAPPID=gcmapplicationid
+cordova plugin add https://github.com/llwwbb/cordova-plugin-AliPush.git --variable APP_KEY=appkey --variable APP_SECRET=appsecret --variable MIID=miid --variable MIKEY=mikey --variable GCMSENDID=gcmsendid --variable GCMAPPID=gcmapplicationid
 
 **初始化。**
 
