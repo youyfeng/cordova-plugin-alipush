@@ -1,35 +1,32 @@
 {
   "author": {
-    "name": "blank"
+    "name": "llwwbb"
   },
   "bugs": {
-    "url": "https://github.com/rxnh8255/AliPush/issues"
+    "url": "https://github.com/llwwbb/cordova-plugin-AliPush"
   },
-  "bundleDependencies": false,
   "cordova": {
     "id": "cordova-plugin-alipush",
     "platforms": [
-      "android"
+      "android",
+      "ios"
     ]
   },
   "deprecated": false,
-  "description": "this is a notificationpush",
-  "engines": [
-    {
-      "name": "cordova",
-      "version": ">=5.0.0"
-    }
-  ],
-  "homepage": "https://github.com/rxnh8255/AliPush",
+  "description": "this is ali push cordova plugin",
+  "homepage": "https://github.com/llwwbb/cordova-plugin-AliPush",
   "keywords": [
     "ecosystem:cordova",
-    "cordova-android"
+    "cordova-android",
+    "cordova-ios",
+    "aliyun",
+    "push"
   ],
   "license": "Apache-2.0",
   "name": "cordova-plugin-alipush",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rxnh8255/AliPush.git"
+    "url": "git+https://github.com/llwwbb/cordova-plugin-AliPush.git"
   },
-  "version": "1.0.551"
+  "version": "1.0.0"
 }
