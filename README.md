@@ -20,7 +20,7 @@ cordova plugin add https://github.com/llwwbb/cordova-plugin-AliPush.git --variab
 
     init: function (success, error)
 
-    init执行后，success会在新通知到达时被调用，参数为{title: "Push Title", content: "Push Body", extras: Object, eventType: "eventType"}
+    init执行后，success会在新通知到达时被调用，通知：{title: "Push Title", content: "Push Body", extras: Object, eventType: "eventType"}， 消息：{eventType:'receiveMessage', messageid: string, title: "title", content: "content"}
 
     eventType如下
 
