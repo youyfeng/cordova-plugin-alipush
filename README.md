@@ -42,7 +42,7 @@ cordova plugin add https://github.com/llwwbb/cordova-plugin-AliPush.git --variab
 
     同一设备更换绑定账号时无需进行解绑，重新调用绑定账号接口即可覆盖生效；
 
-    bindAccount: function (success, error, account) 
+    bindAccount: function (account, success, error) 
 
 **解绑账号**
 
@@ -68,7 +68,7 @@ cordova plugin add https://github.com/llwwbb/cordova-plugin-AliPush.git --variab
 
         alias 别名（仅当target = 3时生效）
 
-    bindTag: function (success, error, args)  // args: {target:Number, tags:Array<String>, alias?:string}
+    bindTag: function (args, success, error)  // args: {target:Number, tags:Array<String>, alias?:string}
 
 **解绑标签**
 
@@ -82,7 +82,7 @@ cordova plugin add https://github.com/llwwbb/cordova-plugin-AliPush.git --variab
 
     参数同上
 
-    unbindTag: function (success, error, args)  // args: {target:Number, tags:Array<String>, alias?:string}
+    unbindTag: function (args, success, error)  // args: {target:Number, tags:Array<String>, alias?:string}
 
 **查询标签**
 
@@ -102,7 +102,7 @@ cordova plugin add https://github.com/llwwbb/cordova-plugin-AliPush.git --variab
 
     别名支持128字节。
 
-    addAlias: function (success, error, alias) 
+    addAlias: function (alias, success, error) 
 
 **删除别名**
 
@@ -110,7 +110,7 @@ cordova plugin add https://github.com/llwwbb/cordova-plugin-AliPush.git --variab
 
     支持删除指定别名和删除全部别名（alias为null or length = 0）
 
-    removeAlias: function (success, error, alias) 
+    removeAlias: function (alias, success, error) 
 
 **查询别名**
 
