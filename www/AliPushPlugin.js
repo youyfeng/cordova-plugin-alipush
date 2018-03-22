@@ -34,11 +34,11 @@ module.exports = {
 	},
 	//ios only
 	setBadge: function (badge, success, error) {
-		exec(function (aliases) { success(aliases.split(',')) }, error, "AliPushPlugin", "setBadge", [badge]);
+		exec(success, error, "AliPushPlugin", "setBadge", [badge]);
 	},
 	//ios only
 	syncBadge: function (badge, success, error) {
-		exec(function (aliases) { success(aliases.split(',')) }, error, "AliPushPlugin", "syncBadge", [badge]);
+		exec(success, error, "AliPushPlugin", "syncBadge", [badge]);
 	},
 
 }
