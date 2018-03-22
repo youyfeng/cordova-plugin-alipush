@@ -32,5 +32,13 @@ module.exports = {
 	listAliases: function (success, error) {
 		exec(function (aliases) { success(aliases.split(',')) }, error, "AliPushPlugin", "listAliases", []);
 	},
+	//ios only
+	setBadge: function (badge, success, error) {
+		exec(function (aliases) { success(aliases.split(',')) }, error, "AliPushPlugin", "setBadge", [badge]);
+	},
+	//ios only
+	syncBadge: function (badge, success, error) {
+		exec(function (aliases) { success(aliases.split(',')) }, error, "AliPushPlugin", "syncBadge", [badge]);
+	},
 
 }

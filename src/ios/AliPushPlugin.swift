@@ -177,6 +177,26 @@ import CloudPushSDK
         })
     }
     
+    public func setBadge(_ cmd: CDVInvokedUrlCommand){
+        // 设置角标数
+        UIApplication.shared.applicationIconBadgeNumber = cmd.argument(at: 0) as! Int
+        self.commandDelegate.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: cmd.callbackId);
+    }
+    
+    public func syncBadge(_ cmd: CDVInvokedUrlCommand){
+        // 同步角标数到服务端
+        CloudPushSDK.syncBadgeNum(cmd.argument(at: 0) as! UInt , withCallback: {res in
+            let result:CDVPluginResult;
+            if(res!.success){
+                result = CDVPluginResult(status: CDVCommandStatus_OK);
+            }else{
+                print("sync badge failed ",cmd.argument(at: 0), res!.error!.localizedDescription);
+                result = CDVPluginResult(status: CDVCommandStatus_ERROR);
+            }
+            self.commandDelegate.send(result, callbackId: cmd.callbackId);
+        })
+    }
+    
     
     // 处理推送消息
     func onMessageReceived(notification:Notification){
@@ -226,7 +246,7 @@ import CloudPushSDK
     // 初始化推送SDK
     func initCloudPushSDK() {
         // 打开Log，线上建议关闭
-        CloudPushSDK.turnOnDebug()
+//        CloudPushSDK.turnOnDebug()
         let appkey = commandDelegate.settings["alipush_app_key"] as! String;
         let appSecret = commandDelegate.settings["alipush_app_secret"] as! String;
         CloudPushSDK.asyncInit(appkey, appSecret: appSecret, callback: {res in
@@ -300,10 +320,6 @@ import CloudPushSDK
         let badge = content.badge ?? 0
         // 取得通知自定义字段内容，例：获取key为"Extras"的内容
         let extras = userInfo["Extras"]
-        // 设置角标数为0
-        UIApplication.shared.applicationIconBadgeNumber = 0
-        // 同步角标数到服务端
-        // self.syncBadgeNum(0)
         // 通知打开回执上报
         CloudPushSDK.sendNotificationAck(userInfo)
         print("Notification, date: \(noticeDate), title: \(title), subtitle: \(subtitle), body: \(body), badge: \(badge), extras: \(String(describing: extras)).")
