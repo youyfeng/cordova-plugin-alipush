@@ -39,6 +39,6 @@ extension AppDelegate {
         let body = alert["body"] as! String;
         AliPushPlugin.fireNotificationEvent(object: ["eventType":"receiveNotification", "title": title, "content": body, "extras": userInfo]);
         CloudPushSDK.sendNotificationAck(userInfo)
-        print("Notification, title: \(title), body: \(body), sound: \(sound).");
+        print("Notification, title: \(title), body: \(body).");
     }
 }
