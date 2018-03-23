@@ -20,9 +20,18 @@ import CloudPushSDK
         NotificationCenter.default.addObserver(self, selector: #selector(onChannelOpened(notification:)), name: NSNotification.Name("CCPDidChannelConnectedSuccess"), object: nil)
 
         callbackId = cmd.callbackId;
-        let result = CDVPluginResult(status: CDVCommandStatus_OK);
-        result?.setKeepCallbackAs(true);
-        commandDelegate.send(result, callbackId: cmd.callbackId);
+        
+        if(AliPushPlugin.notificationCache != nil){
+            for item in AliPushPlugin.notificationCache! {
+                let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: item);
+                result?.setKeepCallbackAs(true);
+                commandDelegate.send(result, callbackId: cmd.callbackId);
+            }
+        }else{
+            let result = CDVPluginResult(status: CDVCommandStatus_OK);
+            result?.setKeepCallbackAs(true);
+            commandDelegate.send(result, callbackId: cmd.callbackId);
+        }
     }
     
     static func fireNotificationEvent(object:[AnyHashable:Any]){
