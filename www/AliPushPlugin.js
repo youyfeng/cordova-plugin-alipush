@@ -40,5 +40,13 @@ module.exports = {
 	syncBadge: function (badge, success, error) {
 		exec(success, error, "AliPushPlugin", "syncBadge", [badge]);
 	},
+	//android only
+	bindPhoneNumber: function (phoneNumber, success, error){
+		exec(success, error, "AliPushPlugin", "bindPhoneNumber", [phoneNumber]);
+	},
+	//android only
+	unbindPhoneNumber: function (success, error){
+		exec(success, error, "AliPushPlugin", "unbindPhoneNumber", []);
+	}
 
 }
