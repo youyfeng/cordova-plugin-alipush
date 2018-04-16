@@ -144,11 +144,11 @@ public class AliPushPlugin extends CordovaPlugin {
                 service.listAliases(callback);
                 break;
             }
-            case 'bindPhoneNumber': {
+            case "bindPhoneNumber": {
                 service.bindPhoneNumber(args.getString(0), callback);
                 break;
             }
-            case 'unbindPhoneNumber': {
+            case "unbindPhoneNumber": {
                 service.unbindPhoneNumber(callback);
                 break;
             }
