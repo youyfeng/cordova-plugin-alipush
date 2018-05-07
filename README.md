@@ -124,26 +124,18 @@ cordova plugin add https://github.com/llwwbb/cordova-plugin-AliPush.git --variab
 
 **设置角标**
 
-	setBadge: function (badge, success, error) {
-		exec(success, error, "AliPushPlugin", "setBadge", [badge]);
-	},
+	setBadge: function (badge, success, error)
 
 **角标数量与阿里云服务器同步**
 
-	syncBadge: function (badge, success, error) {
-		exec(success, error, "AliPushPlugin", "syncBadge", [badge]);
-	},
+	syncBadge: function (badge, success, error)
 
 以下android only
 
 **绑定电话号**
 
-	bindPhoneNumber: function (phoneNumber, success, error){
-		exec(success, error, "AliPushPlugin", "bindPhoneNumber", [phoneNumber]);
-	},
+	bindPhoneNumber: function (phoneNumber, success, error)
 
 **解绑电话号**
 
-	unbindPhoneNumber: function (success, error){
-		exec(success, error, "AliPushPlugin", "unbindPhoneNumber", []);
-	}
+	unbindPhoneNumber: function (success, error)
