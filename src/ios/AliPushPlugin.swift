@@ -1,7 +1,7 @@
 import UserNotifications
 import CloudPushSDK
 @objc(AliPushPlugin) class AliPushPlugin: CDVPlugin, UNUserNotificationCenterDelegate{
-    open static var share: AliPushPlugin?
+    static var share: AliPushPlugin?
     static var notificationCache: [ [AnyHashable:Any]]?
     var callbackId:String?
     
@@ -106,7 +106,7 @@ import CloudPushSDK
             self.commandDelegate.send(result, callbackId: cmd.callbackId);
         }
         else {
-                CloudPushSDK.addAlias(cmd.argument(at: 0) as! String, withCallback: {res in
+                CloudPushSDK.addAlias(cmd.argument(at: 0) as? String, withCallback: {res in
                     let result:CDVPluginResult;
                     if(res!.success){
                         result = CDVPluginResult(status: CDVCommandStatus_OK);
@@ -116,6 +116,7 @@ import CloudPushSDK
                     }
                     self.commandDelegate.send(result, callbackId: cmd.callbackId);
                 })
+
         }
     }
     
@@ -136,7 +137,7 @@ import CloudPushSDK
         CloudPushSDK.listTags(1, withCallback: {res in
             let result:CDVPluginResult;
             if(res!.success){
-                print("tags", res!.data);
+                // print("tags", res!.data);
                 result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: (res!.data as! String));
             }else{
                 print("remove alias failed",cmd.argument(at: 0), res!.error!.localizedDescription);
@@ -208,22 +209,21 @@ import CloudPushSDK
     
     
     // 处理推送消息
-    func onMessageReceived(notification:Notification){
+    @objc func onMessageReceived(notification:Notification){
         let pushMessage: CCPSysMessage = notification.object as! CCPSysMessage
-        let title = String.init(data: pushMessage.title, encoding: String.Encoding.utf8)
+        let title = String.init(data: pushMessage.title, encoding: String.Encoding.utf8) ?? ""
         let body = String.init(data: pushMessage.body, encoding: String.Encoding.utf8)
-        print("Message title: \(title!), body: \(body!).")
-        AliPushPlugin.fireNotificationEvent(object: ["eventType":"receiveMessage", "title":title, "body":body]);
+        // print("Message title: \(title!), body: \(body!).")
+        AliPushPlugin.fireNotificationEvent(object: ["eventType":"receiveMessage", "title":title, "body":body as Any]);
     }
     
-    func onChannelOpened(notification:Notification){
+    @objc func onChannelOpened(notification:Notification){
         print("connect successful");
     }
     
     // 向APNs注册，获取deviceToken用于推送
     func registerAPNs(_ application: UIApplication) {
-        if #available(iOS 10, *) {
-            // iOS 10+
+        if(ProcessInfo.processInfo.isOperatingSystemAtLeast(OperatingSystemVersion(majorVersion: 10, minorVersion: 0, patchVersion: 0))) {
             let center = UNUserNotificationCenter.current()
             // 创建category，并注册到通知中心
             //createCustomNotificationCategory()
@@ -242,13 +242,9 @@ import CloudPushSDK
                     print("User denied notification.")
                 }
             })
-        } else if #available(iOS 8, *) {
-            // iOS 8+
+        } else {
             application.registerUserNotificationSettings(UIUserNotificationSettings.init(types: [.alert, .badge, .sound], categories: nil))
             application.registerForRemoteNotifications()
-        } else {
-            // < iOS 8
-            application.registerForRemoteNotifications(matching: [.alert,.badge,.sound])
         }
     }
     
