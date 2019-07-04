@@ -1,9 +1,9 @@
 {
   "author": {
-    "name": "llwwbb"
+    "name": "youyfeng"
   },
   "bugs": {
-    "url": "https://github.com/llwwbb/cordova-plugin-AliPush"
+    "url": "https://github.com/youyfeng/cordova-plugin-alipush"
   },
   "cordova": {
     "id": "cordova-plugin-alipush",
@@ -14,7 +14,7 @@
   },
   "deprecated": false,
   "description": "this is ali push cordova plugin",
-  "homepage": "https://github.com/llwwbb/cordova-plugin-AliPush",
+  "homepage": "https://github.com/youyfeng/cordova-plugin-alipush",
   "keywords": [
     "ecosystem:cordova",
     "cordova-android",
@@ -26,7 +26,7 @@
   "name": "cordova-plugin-alipush",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/llwwbb/cordova-plugin-AliPush.git"
+    "url": "git+https://github.com/youyfeng/cordova-plugin-alipush.git"
   },
   "version": "1.0.1"
 }
